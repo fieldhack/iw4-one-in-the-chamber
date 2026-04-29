@@ -1,5 +1,3 @@
-// One in the Chamber core logic
-
 init()
 {
     level thread onPlayerConnect();
@@ -53,18 +51,49 @@ setupLoadout()
     self endon("death");
     self endon("disconnect");
 
-    self takeAllWeapons();
+    if (self.pers["isBot"])
+        wait 0.5;
+    else
+        wait 0.15;
 
+    self takeAllWeapons();
     wait 0.05;
 
-    self giveWeapon("coltanaconda_mp");
+    if (!self hasWeapon("coltanaconda_mp"))
+        self giveWeapon("coltanaconda_mp");
+
     self setWeaponAmmoClip("coltanaconda_mp", 1);
     self setWeaponAmmoStock("coltanaconda_mp", 0);
-
-    wait 0.05;
-    
     self switchToWeapon("coltanaconda_mp");
+
+    if (self.pers["isBot"])
+        self thread enforceLoadout();
 }
+
+enforceLoadout()
+{
+    self endon("death");
+    self endon("disconnect");
+
+    checks = 0;
+    while (checks < 5)
+    {
+        wait 0.2;
+        checks++;
+
+        currentWeapon = self getCurrentWeapon();
+
+        if (!self hasWeapon("coltanaconda_mp") || currentWeapon == "none_mp" || currentWeapon == "none")
+        {
+            self takeAllWeapons();
+            wait 0.05;
+            self giveWeapon("coltanaconda_mp");
+            self setWeaponAmmoClip("coltanaconda_mp", 1);
+            self setWeaponAmmoStock("coltanaconda_mp", 0);
+            self switchToWeapon("coltanaconda_mp");
+        }
+    }
+}v
 
 onKilledEnemy()
 {
@@ -75,13 +104,18 @@ onKilledEnemy()
     {
         self waittill("killed_enemy");
         
+        if (!self hasWeapon("coltanaconda_mp"))
+            continue;
+
         currentClip = self getWeaponAmmoClip("coltanaconda_mp");
         self setWeaponAmmoClip("coltanaconda_mp", currentClip + 1);
 
-        // force ammo HUD to refresh
-        wait 0.05;
-        self switchToWeapon("coltanaconda_mp");
+        //wait 0.05;
 
+        if (!self hasWeapon("coltanaconda_mp"))
+            continue;
+
+        self switchToWeapon("coltanaconda_mp");
         self iPrintLnBold("^2+^71");
     }
 }
@@ -193,7 +227,7 @@ checkLastManStanding()
 	    player iPrintLnBold("^1" + winner.name + " ^7wins the round!");
         }
         
-        wait 8.0;
+        wait 7.0;
         Exec("fast_restart");
     }
     else if (alivePlayers.size == 0)
@@ -206,7 +240,7 @@ checkLastManStanding()
             player.finalHud.alpha = 0;
         }
 	
-        wait 8.0;
+        wait 7.0;
         Exec("fast_restart");
     }
 }

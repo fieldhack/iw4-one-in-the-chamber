@@ -54,14 +54,11 @@ setupLoadout()
     if (self.pers["isBot"])
         wait 0.5;
     else
-        wait 0.15;
+        wait 0.05;
 
     self takeAllWeapons();
-    wait 0.05;
 
-    if (!self hasWeapon("coltanaconda_mp"))
-        self giveWeapon("coltanaconda_mp");
-
+    self giveWeapon("coltanaconda_mp");
     self setWeaponAmmoClip("coltanaconda_mp", 1);
     self setWeaponAmmoStock("coltanaconda_mp", 0);
     self switchToWeapon("coltanaconda_mp");

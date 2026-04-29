@@ -144,7 +144,7 @@ showLivesHUD()
         self.livesHud.alignY     = "top";
         self.livesHud.horzAlign  = "left";
         self.livesHud.vertAlign  = "top";
-        self.livesHud.x          = 90;
+        self.livesHud.x          = 50;
         self.livesHud.y          = 5;
         self.livesHud.color      = (1, 1, 1);
         self.livesHud.alpha      = 1;
@@ -166,12 +166,12 @@ showFinalHUD()
     {
         self.finalHud            = newClientHudElem(self);
         self.finalHud.font       = "objective";
-        self.finalHud.fontscale  = 1.5;
+        self.finalHud.fontscale  = 1.1;
         self.finalHud.alignX     = "left";
         self.finalHud.alignY     = "top";
         self.finalHud.horzAlign  = "left";
         self.finalHud.vertAlign  = "top";
-        self.finalHud.x          = 90;
+        self.finalHud.x          = 50;
         self.finalHud.y          = 30;
         self.finalHud.color      = (1, 1, 1);
         self.finalHud.alpha      = 0;
@@ -179,7 +179,7 @@ showFinalHUD()
 
     for (;;)
     {
-        self.finalHud setText("^1ONLY TWO REMAIN^7!");
+        self.finalHud setText("^1TWO PLAYERS REMAIN^7!");
     	wait(0.5);
     }
 }

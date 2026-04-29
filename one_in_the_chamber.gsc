@@ -51,13 +51,10 @@ setupLoadout()
     self endon("death");
     self endon("disconnect");
 
-    if (self.pers["isBot"])
-        wait 0.5;
-    else
-        wait 0.05;
+    if (isDefined(self.pers["isBot"]) && self.pers["isBot"])
+    	wait 0.5;
 
     self takeAllWeapons();
-
     self giveWeapon("coltanaconda_mp");
     self setWeaponAmmoClip("coltanaconda_mp", 1);
     self setWeaponAmmoStock("coltanaconda_mp", 0);
@@ -90,7 +87,7 @@ enforceLoadout()
             self switchToWeapon("coltanaconda_mp");
         }
     }
-}v
+}
 
 onKilledEnemy()
 {
